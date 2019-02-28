@@ -136,32 +136,24 @@ public class Maze {
           wait(20);
       }
       //COMPLETE SOLVE
-      if (maze[row][col]=='E') return 1;
       int spots = 0;
       int[] moves = {1,0,-1,0,0,1,0,-1};
       for (int i=0;i<moves.length;i+=2) {
-        if (move(row+moves[i],col+moves[i+1])) {
-          if (maze[row+moves[i]][col+moves[i+1]]!='@') {
-            maze[row][col]='@';
-            spots++;
-            if (solve(row+moves[i],col+moves[i+1])==1) {
-              return 1;
-            }
+        int nextRow=row+moves[i];
+        int nextCol=col+moves[i+1];
+        if (move(nextRow,nextCol)) {
+          maze[row][col]='@';
+          if (maze[nextRow][nextCol]=='E') {
+            return 1;
+          }
+          if (maze[nextRow][nextCol]!='@') {
+            spots=solve(nextRow,nextCol);
+            if (spots!=0) return spots+1;
           }
         }
       }
-      for (int i=0;i<moves.length;i+=2) {
-        if (move(row+moves[i],col+moves[i+1])) {
-          if (maze[row+moves[i]][col+moves[i+1]]=='@') {
-            maze[row][col]='.';
-            spots--;
-            if (solve(row+moves[i],col+moves[i+1])==1) {
-              return 1;
-            }
-          }
-        }
-      }
-      return spots;
+      maze[row][col]='.';
+      return 0;
   }
 
 }
