@@ -144,7 +144,10 @@ public class Maze {
         if (move(row+moves[i],col+moves[i+1])) {
           if (maze[row+moves[i]][col+moves[i+1]]!='@') {
             maze[row][col]='@';
-            spots+=solve(row+moves[i],col+moves[i+1]);
+            spots++;
+            if (solve(row+moves[i],col+moves[i+1])==1) {
+              return 1;
+            }
           }
         }
       }
@@ -152,7 +155,10 @@ public class Maze {
         if (move(row+moves[i],col+moves[i+1])) {
           if (maze[row+moves[i]][col+moves[i+1]]=='@') {
             maze[row][col]='.';
-            spots+=solve(row+moves[i],col+moves[i+1]);
+            spots--;
+            if (solve(row+moves[i],col+moves[i+1])==1) {
+              return 1;
+            }
           }
         }
       }
