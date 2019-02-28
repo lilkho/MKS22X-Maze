@@ -108,7 +108,6 @@ public class Maze {
           //erase the S
           maze[sRow][sCol]=' ';
           //and start solving at the location of the s.
-          animate=true;
           return solve(sRow,sCol);
   }
 
@@ -134,7 +133,7 @@ public class Maze {
       if(animate){
           clearTerminal();
           System.out.println(this);
-          wait(200);
+          wait(20);
       }
       //COMPLETE SOLVE
       if (maze[row][col]=='E') return 1;
@@ -165,16 +164,4 @@ public class Maze {
       return spots;
   }
 
-
-  public static void main(String[] args) {
-    try {
-      Maze m = new Maze("Maze1.txt");
-      //System.out.println(maze[7][1]);
-      //System.out.println(m.solve(1,1));
-      System.out.println(m.solve());
-    } catch(FileNotFoundException f) {
-      System.out.println("File doesn't exist");
-    }
-
-  }
 }
