@@ -85,7 +85,7 @@ public class Maze {
   private boolean move(int row, int col) {
     if (row>maze.length || row<0
     || col>maze[0].length || col<0) return false;
-    if (maze[row][col]=='#' || maze[row][col]=='@' || maze[row][col]=='.') return false;
+    if (maze[row][col]=='#' || maze[row][col]=='.') return false;
     return true;
   }
 
@@ -142,8 +142,18 @@ public class Maze {
       int[] moves = {1,0,-1,0,0,1,0,-1};
       for (int i=0;i<moves.length;i+=2) {
         if (move(row+moves[i],col+moves[i+1])) {
-          maze[row][col]='@';
-          spots+=solve(row+moves[i],col+moves[i+1]);
+          if (maze[row+moves[i]][col+moves[i+1]]!='@') {
+            maze[row][col]='@';
+            spots+=solve(row+moves[i],col+moves[i+1]);
+          }
+        }
+      }
+      for (int i=0;i<moves.length;i+=2) {
+        if (move(row+moves[i],col+moves[i+1])) {
+          if (maze[row+moves[i]][col+moves[i+1]]=='@') {
+            maze[row][col]='.';
+            spots+=solve(row+moves[i],col+moves[i+1]);
+          }
         }
       }
       return spots;
