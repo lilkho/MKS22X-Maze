@@ -101,17 +101,20 @@ public class Maze {
 
   */
   public int solve(){
-
+          int sRow=0;int sCol=0;
           //find the location of the S.
-
-
+          for (int i=0;i<maze.length;i++) {
+            for (int j=0;j<maze[i].length;j++) {
+              if (maze[i][j]=='S') {
+                sRow=i;sCol=j;
+              }
+            }
+          }
           //erase the S
-
-
+          maze[sRow][sCol]=' ';
           //and start solving at the location of the s.
-
-          //return solve(???,???);
-          return 0;
+          animate=true;
+          return solve(sRow,sCol);
   }
 
   /*
@@ -131,9 +134,7 @@ public class Maze {
 
       All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ //you can add more parameters since this is private
-
-
+  private int solve(int row, int col, int moves){ //you can add more parameters since this is private
       //automatic animation! You are welcome.
       if(animate){
 
@@ -142,9 +143,8 @@ public class Maze {
 
           wait(20);
       }
-
       //COMPLETE SOLVE
-
+      if (maze[row][col]=='E') return
       return -1; //so it compiles
   }
 
@@ -152,8 +152,9 @@ public class Maze {
   public static void main(String[] args) {
     try {
       Maze m = new Maze("Maze1.txt");
-      System.out.println(m);
       //System.out.println(maze[7][1]);
+      //System.out.println(m.solve(1,1));
+      System.out.println(m.solve());
     } catch(FileNotFoundException f) {
       System.out.println("File doesn't exist");
     }
