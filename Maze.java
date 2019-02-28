@@ -57,24 +57,14 @@ public class Maze {
 
 
   public void setAnimate(boolean b){
-
       animate = b;
-
   }
 
 
   public void clearTerminal(){
-
       //erase terminal, go to top left of screen.
-
       System.out.println("\033[2J\033[1;1H");
-
   }
-
-
-
-
-
 
   /*Return the string that represents the maze.
 
@@ -92,7 +82,12 @@ public class Maze {
     return ans;
   }
 
-
+  private boolean move(int row, int col) {
+    if (row>maze.length || row<0
+    || col>maze[0].length || col<0) return false;
+    if (maze[row][col]=='#' || maze[row][col]=='@' || maze[row][col]=='.') return false;
+    return true;
+  }
 
   /*Wrapper Solve Function returns the helper function
 
@@ -134,18 +129,24 @@ public class Maze {
 
       All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col, int moves){ //you can add more parameters since this is private
+  private int solve(int row, int col){ //you can add more parameters since this is private
       //automatic animation! You are welcome.
       if(animate){
-
           clearTerminal();
           System.out.println(this);
-
-          wait(20);
+          wait(200);
       }
       //COMPLETE SOLVE
-      if (maze[row][col]=='E') return
-      return -1; //so it compiles
+      if (maze[row][col]=='E') return 1;
+      int spots = 0;
+      int[] moves = {1,0,-1,0,0,1,0,-1};
+      for (int i=0;i<moves.length;i+=2) {
+        if (move(row+moves[i],col+moves[i+1])) {
+          maze[row][col]='@';
+          spots+=solve(row+moves[i],col+moves[i+1]);
+        }
+      }
+      return spots;
   }
 
 
